@@ -47,5 +47,5 @@
           d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
   </svg>
 </button>
-        <iframe src="/notebooks_html/${r.document_name}" style="width: 100%; height: 80vh; border: none;"></iframe>
+        <iframe src="./notebooks_html/${r.document_name}" style="width: 100%; height: 80vh; border: none;"></iframe>
       `,i.querySelector(".btn-back").addEventListener("click",()=>{e()})}document.querySelectorAll(".project-item").forEach(c=>c.classList.remove("active")),t.classList.add("active"),e()})});
