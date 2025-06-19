@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Scraping de productos de tienda web reconocida</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    h1, h2 {
+      color: #2c3e50;
+      border-bottom: 2px solid #2980b9;
+      padding-bottom: 5px;
+    }
+    ul, ol {
+      padding-left: 30px;
+    }
+    code {
+      background-color: #eee;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 20px 0;
+      border: 1px solid #ccc;
+    }
+    p {
+      margin: 10px 0 20px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Web scraping de productos de tienda web reconocida</h1>
+
+<p>Este proyecto de web scraping tiene como objetivo la extracción de todos los productos ofrecidos por una empresa reconocida, relacionada con la construcción, el hogar, autopartes, elementos ferreteros, entre otros.</p>
+
+<h2>Pasos seguidos para extraer los productos</h2>
+
+<ol>
+  <li>Configurar la cookie que elimina la solicitud de ubicacion de la pagina</li>
+  <li>Hacer <em>hover</em> sobre los elementos de la barra de navegación, denominados <strong>secciones</strong>.</li>
+  <li>En cada <em>hover</em>, recuperar la URL de los elementos resaltados en azul, que corresponden a las <strong>familias</strong>.</li>
+  <li>Reemplazar la palabra <code>'landing'</code> por <code>'category'</code> en cada una de las URLs recuperadas, para acceder al catálogo completo de esa familia.</li>
+  <li>Recuperar la URL de cada <strong>categoría</strong> presente por familia en la barra lateral izquierda de la página.</li>
+  <li>Verificar si cada página de categoría tiene <strong>subcategorías</strong>:
+    <ul>
+      <li>Si hay subcategorías, recorrer cada una y extraer los productos.</li>
+      <li>Si no hay subcategorías, extraer los productos directamente desde la URL de la categoría.</li>
+    </ul>
+  </li>
+</ol>
+
+<h2>Jerarquía de los productos</h2>
+
+<ul>
+  <li>Sección</li>
+  <li>Familia</li>
+  <li>Categoría</li>
+  <li>Subcategoría (si existe)</li>
+</ul>
+
+<p>Este scraping comprende contenido estático y dinámico, por lo cual se hace uso de las siguientes librerías:</p>
+
+<ul>
+  <li><strong>Selenium</strong>: para el contenido dinámico presente en los primeros pasos.</li>
+  <li><strong>BeautifulSoup</strong>: para el contenido estático presente en las páginas que contienen los productos.</li>
+</ul>
+
+<h2>Datos extraídos</h2>
+
+<ul>
+  <li><code>score</code>: Puntuación de 1 a 5 estrellas.</li>
+  <li><code>brand</code>: Marca del fabricante del producto.</li>
+  <li><code>sku</code>: Código único por producto.</li>
+  <li><code>price</code>: Precio en pesos colombianos.</li>
+  <li><code>url</code>: URL del producto en la tienda real.</li>
+  <li><code>image</code>: URL de la imagen de presentación del producto.</li>
+  <li><code>name</code>: Nombre del producto.</li>
+  <li><code>section</code>: Agrupación global.</li>
+  <li><code>family</code>: Grupo en la sección al que pertenece.</li>
+  <li><code>category</code>: Grupo en la familia al que pertenece.</li>
+  <li><code>sub_category</code>: Grupo (si existe) al que pertenece.</li>
+</ul>
+
+<p>El tiempo total de extracción fue de aproximadamente <strong>2 horas</strong>, recuperando cerca de <strong>200,000 productos</strong>.</p>
+
+<h2>Modelado y transformación de los datos</h2>
+
+<p>En este punto, los datos cargados en una base de datos SQLite se presentan en una única tabla con todos los productos, y deben ser remodelados para obtener tablas separadas de:</p>
+
+<ul>
+  <li><code>products</code></li>
+  <li><code>categories</code></li>
+  <li><code>brands</code></li>
+  <li><code>sections</code></li>
+  <li><code>families</code></li>
+  <li><code>sub_categories</code></li>
+</ul>
+
+<p>Con sus respectivas relaciones.</p>
+
+<img src="https://github.com/user-attachments/assets/9d847555-8302-4979-a7e1-e0e7944f93f5" alt="image">
+
+</body>
+</html>
